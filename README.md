@@ -1,110 +1,222 @@
-# AI Dev System
+<h1 align="center">🤖 ai-dev-system</h1>
 
-> Cross-stack AI development workflow system for freelancers and teams.
+<p align="center">
+  <strong>Portable AI Development Workflow System</strong><br>
+  <em>Integrate AI coding assistants into your development workflow across any tech stack</em>
+</p>
 
-A unified collection of standards, workflows, skills, and AI agents that can be applied to any project regardless of technology stack.
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square" alt="License: MIT">
+  </a>
+  <a href="https://opencode.ai">
+    <img src="https://img.shields.io/badge/OpenCode-ready-purple?style=flat-square" alt="OpenCode">
+  </a>
+  <a href="https://claude.ai">
+    <img src="https://img.shields.io/badge/Claude%20Code-ready-green?style=flat-square" alt="Claude Code">
+  </a>
+  <a href="https://cursor.sh">
+    <img src="https://img.shields.io/badge/Cursor-ready-blue?style=flat-square" alt="Cursor">
+  </a>
+</p>
+
+<p align="center">
+  <a href="#installation">Installation</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#features">Features</a> •
+  <a href="#cli-commands">CLI</a> •
+  <a href="#contributing">Contributing</a>
+</p>
+
+<p align="center">
+  <a href="./README.zh-TW.md">繁體中文</a>
+</p>
+
+---
+
+## Why ai-dev-system?
+
+Modern developers use AI coding assistants daily, but face common challenges:
+
+- **Inconsistent AI behavior** across different projects
+- **Lost context** when switching between codebases  
+- **Repeated prompting** for the same tasks
+- **No standard workflow** for AI-assisted development
+
+**ai-dev-system** solves this by providing a **portable, standardized AI workflow** that travels with you across projects and AI tools.
+
+### What it provides:
+
+- 🎯 **Consistent AI Context** - Your coding standards, patterns, and preferences follow every project
+- 📚 **Reusable Skills** - Pre-built prompts for code review, debugging, refactoring, and more
+- 🏗️ **Stack Templates** - Language/framework-specific standards (React, Laravel, Node.js, etc.)
+- 🔄 **AI Tool Sync** - One config, multiple AI tools (OpenCode, Claude Code, Cursor)
+- 🔧 **Extensible** - Create custom skills and stacks for your workflow
+
+Perfect for **freelancers**, **consultants**, and **teams** working across multiple tech stacks.
 
 ## Features
 
-- **🤖 AI Agents** - Specialized agents for different tasks (orchestrator, frontend, backend, tester, etc.)
-- **📋 Standards** - Coding standards, security guidelines, testing conventions
-- **🔄 Workflows** - BDD/TDD, contract-driven development, code review processes
-- **🛠️ Skills** - Executable guides for specific tasks (debugging, refactoring, UI/UX)
-- **📚 Tech Stacks** - Stack-specific configurations (React, Laravel, Express, etc.)
-- **🔌 Multi-Tool Support** - Works with Claude Code, OpenCode, Cursor, Antigravity
+- ✅ **Multi-Stack Support** - React, Laravel, Node.js, and more (Python, Go, Rust coming soon)
+- ✅ **AI Tool Agnostic** - Works with OpenCode, Claude Code, Cursor
+- ✅ **Portable Workflows** - Take your AI development patterns across projects
+- ✅ **CLI Tool** - Easy project initialization and sync
+- ✅ **Extensible** - Create custom stacks, skills, and agents
+
+## Installation
+
+### Using Bun (Recommended)
+
+```bash
+# Install globally
+bun install -g ai-dev-cli
+
+# Or run directly
+bunx ai-dev-cli init
+```
+
+### Using npm
+
+```bash
+npm install -g ai-dev-cli
+```
+
+### From Source
+
+```bash
+git clone https://github.com/AdemKao/ai-dev-system.git
+cd ai-dev-system/cli
+bun install
+bun link
+```
 
 ## Quick Start
 
-### Installation
+### 1. Initialize a Project
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/ai-dev-system.git
+# Navigate to your project
+cd your-project
 
-# Navigate to the directory
-cd ai-dev-system
+# Initialize with ai-dev-system
+ai-dev init
 
-# Initialize in your project
-./scripts/init-project.sh --stack=react-typescript /path/to/your/project
+# Or specify a stack
+ai-dev init --stack react-typescript
 ```
 
-### Available Stacks
+This creates a `.ai/` directory with:
 
-| Stack | Description |
+```
+.ai/
+├── context/          # Coding standards and workflows
+├── skills/           # Reusable AI skills
+├── agents/           # Specialized AI agents
+└── stacks/           # Tech stack configurations
+```
+
+### 2. Sync to Your AI Tool
+
+```bash
+# Sync to OpenCode
+ai-dev sync opencode
+
+# Sync to Claude Code
+ai-dev sync claude
+
+# Sync to all supported tools
+ai-dev sync all
+```
+
+### 3. Start Coding with AI
+
+In OpenCode or Claude Code, use your skills:
+
+```
+/code-review     # Run code review skill
+/debug           # Run debug skill
+/commit          # Generate commit message
+```
+
+## CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `ai-dev init` | Initialize ai-dev-system in a project |
+| `ai-dev list` | List available stacks, skills, and agents |
+| `ai-dev add stack <name>` | Add a tech stack to your project |
+| `ai-dev add skill <name>` | Add a skill to your project |
+| `ai-dev sync opencode` | Generate OpenCode configuration |
+| `ai-dev sync claude` | Generate Claude Code configuration |
+| `ai-dev sync all` | Sync to all AI tools |
+| `ai-dev update` | Update ai-dev-system |
+
+## Available Stacks
+
+| Stack | Description | Status |
+|-------|-------------|--------|
+| `react-typescript` | React + TypeScript + Vite | ✅ Available |
+| `php-laravel` | PHP + Laravel | ✅ Available |
+| `node-express` | Node.js + Express | ✅ Available |
+| `python-fastapi` | Python + FastAPI | 🔜 Coming Soon |
+| `go-fiber` | Go + Fiber | 🔜 Coming Soon |
+| `rust-axum` | Rust + Axum | 🔜 Coming Soon |
+
+## Available Skills
+
+| Skill | Description |
 |-------|-------------|
-| `react-typescript` | React with TypeScript, Vite, Testing Library |
-| `php-laravel` | Laravel PHP framework |
-| `node-express` | Express.js with TypeScript |
+| `code-review` | Comprehensive code review with checklist |
+| `debug` | Systematic debugging approach |
+| `commit` | Generate conventional commit messages |
+| `refactor` | Code refactoring guidance |
+| `documentation` | Documentation generation |
+| `feature-implementation` | Feature planning and implementation |
+| `ui-ux` | UI/UX development guidelines |
 
-### Usage Examples
-
-```bash
-# Core only (no specific stack)
-./scripts/init-project.sh /path/to/project
-
-# With React TypeScript stack
-./scripts/init-project.sh --stack=react-typescript /path/to/project
-
-# With Laravel stack
-./scripts/init-project.sh --stack=php-laravel /path/to/project
-
-# With Express stack
-./scripts/init-project.sh --stack=node-express /path/to/project
-```
-
-## Directory Structure
+## Project Structure
 
 ```
-.ai/                           # Core content (Single Source of Truth)
-├── agents/                    # AI agent definitions
-│   ├── orchestrator.md        # Master coordinator
-│   ├── oracle.md              # Architecture & debugging expert
-│   ├── librarian.md           # Documentation specialist
-│   ├── explorer.md            # Fast codebase exploration
-│   ├── frontend-engineer.md   # Frontend development
-│   ├── backend-engineer.md    # Backend development
-│   └── tester.md              # Testing specialist
-│
-├── context/
-│   ├── core/
-│   │   ├── standards/         # Coding standards
-│   │   │   ├── code-quality.md
-│   │   │   ├── dbml.md
-│   │   │   ├── documentation.md
-│   │   │   ├── naming.md
-│   │   │   ├── openapi.md
-│   │   │   ├── security.md
-│   │   │   └── testing.md
-│   │   └── workflows/         # Development workflows
-│   │       ├── bdd-tdd.md
-│   │       ├── bdd-tdd-frontend.md
-│   │       ├── bdd-tdd-backend.md
-│   │       ├── code-review.md
-│   │       ├── contract-driven.md
-│   │       ├── delegation.md
-│   │       └── git-workflow.md
-│   └── index.md               # Context navigation
-│
-├── skills/                    # Executable skill guides
-│   ├── code-review/
-│   ├── commit/
-│   ├── debug/
-│   ├── documentation/
-│   ├── feature-implementation/
-│   ├── refactor/
-│   └── ui-ux/
-│
-├── templates/                 # File templates
-│
-└── stacks/                    # Technology stacks
-    ├── react-typescript/
-    ├── php-laravel/
-    └── node-express/
+ai-dev-system/
+├── .ai/
+│   ├── context/           # Core standards and workflows
+│   │   ├── core/
+│   │   │   ├── standards/ # Code quality, naming, security
+│   │   │   └── workflows/ # BDD/TDD, code review, git
+│   │   └── index.md       # Context entry point
+│   ├── skills/            # Reusable AI skills
+│   ├── agents/            # Specialized AI agents
+│   ├── stacks/            # Tech stack templates
+│   └── templates/         # Project templates
+├── cli/                   # CLI tool source
+└── docs/                  # Documentation
+```
 
-.claude/                       # Claude Code bridge
-.opencode/                     # OpenCode bridge
-.cursor/                       # Cursor bridge
-.agent/                        # Antigravity bridge
+## AI Tool Integration
+
+### OpenCode
+
+After running `ai-dev sync opencode`:
+
+```
+.opencode/
+├── skill/          # Skills in OpenCode format
+├── agent/          # Agents in OpenCode format
+├── command/        # Custom commands
+└── plugin/         # Hooks and plugins
+opencode.json       # Configuration
+AGENTS.md           # Project context
+```
+
+### Claude Code
+
+After running `ai-dev sync claude`:
+
+```
+.claude/
+├── skills/         # Skills in Claude format
+└── commands/       # Custom commands
+CLAUDE.md           # Project context
 ```
 
 ## Key Workflows
@@ -118,8 +230,6 @@ Design contracts first, implement later:
 3. **Implement** → Build to contracts
 4. **Test** → Verify against contracts
 
-See: `.ai/context/core/workflows/contract-driven.md`
-
 ### BDD/TDD
 
 Behavior-driven and test-driven development:
@@ -127,69 +237,52 @@ Behavior-driven and test-driven development:
 - **Frontend**: Component tests → Implementation → E2E tests
 - **Backend**: Feature spec → Unit tests → Implementation → Integration tests
 
-See: `.ai/context/core/workflows/bdd-tdd-frontend.md` and `bdd-tdd-backend.md`
+## How It Works
 
-## AI Tool Compatibility
-
-| Tool | Bridge Directory | Status |
-|------|-----------------|--------|
-| Claude Code | `.claude/` | ✅ Supported |
-| OpenCode | `.opencode/` | ✅ Supported |
-| Cursor | `.cursor/` | ✅ Supported |
-| Antigravity | `.agent/` | ✅ Supported |
-| GitHub Copilot | `.github/` | 🔜 Planned |
-
-## Customization
-
-### Adding Project-Specific Context
-
-Create files in `.ai/context/project/`:
-
-```markdown
-# .ai/context/project/project.md
-
-## Project Overview
-[Your project description]
-
-## Tech Stack
-- Frontend: React + TypeScript
-- Backend: Node.js + Express
-- Database: PostgreSQL
-
-## Conventions
-[Project-specific conventions]
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Your Project                            │
+├─────────────────────────────────────────────────────────────┤
+│  .ai/                                                       │
+│  ├── context/        ← Coding standards & workflows         │
+│  ├── skills/         ← Reusable AI prompts                  │
+│  ├── agents/         ← Specialized AI agents                │
+│  └── stacks/         ← Tech stack configs                   │
+├─────────────────────────────────────────────────────────────┤
+│                    ai-dev sync                              │
+├──────────────┬──────────────┬───────────────────────────────┤
+│  .opencode/  │   .claude/   │        (other tools)          │
+│  OpenCode    │  Claude Code │         Cursor, etc.          │
+└──────────────┴──────────────┴───────────────────────────────┘
 ```
 
-### Adding Custom Skills
-
-Create a new skill in `.ai/skills/your-skill/SKILL.md`:
-
-```markdown
----
-name: your-skill
-description: What this skill does
-triggers:
-  - keyword1
-  - keyword2
----
-
-# Your Skill
-
-## Workflow
-...
-
-## Checklist
-...
-```
+1. **Initialize** - `ai-dev init` creates `.ai/` with standards and skills
+2. **Customize** - Add your stack, modify standards to fit your workflow
+3. **Sync** - `ai-dev sync opencode` generates tool-specific configs
+4. **Code** - Your AI assistant now follows your standards automatically
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+```bash
+# Clone the repository
+git clone https://github.com/AdemKao/ai-dev-system.git
+cd ai-dev-system
+
+# Install CLI dependencies
+cd cli && bun install
+
+# Run in development mode
+bun run dev -- --help
+```
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+[MIT](./LICENSE)
+
+---
+
+<p align="center">
+  Made with ❤️ for developers who code with AI
+</p>
