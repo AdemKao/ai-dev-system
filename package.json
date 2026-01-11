@@ -10,8 +10,9 @@
   "scripts": {
     "build": "cd cli && npm run build",
     "dev": "cd cli && npm run dev",
+    "test": "cd cli && npm test",
+    "test:coverage": "cd cli && npm run test:coverage",
     "prepublishOnly": "npm run build",
-    "test": "echo \"No tests yet\" && exit 0",
     "postinstall": "echo '✨ ai-cowork installed! Run: npx ai-cowork init'"
   },
   "keywords": [

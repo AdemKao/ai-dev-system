@@ -29,7 +29,7 @@ export function getPackageRoot(): string {
     if (fs.existsSync(pkgJson)) {
       try {
         const pkg = JSON.parse(fs.readFileSync(pkgJson, 'utf-8'));
-        if (pkg.name === 'ai-dev-system' || pkg.name === '@anthropics-dev/ai-dev-cli') {
+        if (pkg.name === 'ai-cowork' || pkg.name === 'ai-dev-system') {
           return dir;
         }
       } catch {
