@@ -25,12 +25,14 @@ Frontend testing focuses on:
      /       Unit       \ ← Many: Utilities, hooks, helpers
 ```
 
-| Level | Scope | Tools | Speed |
-|-------|-------|-------|-------|
-| Unit | Functions, hooks | Vitest/Jest | Fast |
-| Component | Single component | Testing Library | Fast |
-| Integration | Multiple components | Testing Library | Medium |
-| E2E | Full user flows | Playwright/Cypress | Slow |
+| Level | Scope | Speed |
+|-------|-------|-------|
+| Unit | Functions, utilities, helpers | Fast |
+| Component | Single component in isolation | Fast |
+| Integration | Multiple components together | Medium |
+| E2E | Full user flows in browser | Slow |
+
+> **Stack-specific tools**: See your stack's `workflows/bdd-tdd-frontend.md` for framework-specific testing tools and examples.
 
 ---
 
@@ -71,65 +73,32 @@ Feature: User Login
 
 ### Step 2: Convert to Test Cases
 
-```typescript
-// src/features/auth/LoginForm.test.tsx
+Transform Gherkin scenarios into test cases using your framework's testing tools.
 
-describe('LoginForm', () => {
-  describe('Successful login', () => {
-    it('should redirect to dashboard after valid login', async () => {
-      // Given
-      render(<LoginForm />);
-      
-      // When
-      await userEvent.type(screen.getByLabelText(/email/i), 'user@example.com');
-      await userEvent.type(screen.getByLabelText(/password/i), 'password123');
-      await userEvent.click(screen.getByRole('button', { name: /login/i }));
-      
-      // Then
-      await waitFor(() => {
-        expect(mockRouter.push).toHaveBeenCalledWith('/dashboard');
-      });
-    });
-  });
+**Pseudocode pattern:**
 
-  describe('Invalid password', () => {
-    it('should show error message for invalid credentials', async () => {
-      // Given
-      server.use(
-        http.post('/api/auth/login', () => {
-          return HttpResponse.json(
-            { code: 'INVALID_CREDENTIALS', message: 'Invalid credentials' },
-            { status: 401 }
-          );
-        })
-      );
-      render(<LoginForm />);
-      
-      // When
-      await userEvent.type(screen.getByLabelText(/email/i), 'user@example.com');
-      await userEvent.type(screen.getByLabelText(/password/i), 'wrongpassword');
-      await userEvent.click(screen.getByRole('button', { name: /login/i }));
-      
-      // Then
-      expect(await screen.findByText(/invalid credentials/i)).toBeInTheDocument();
-    });
-  });
-
-  describe('Empty form submission', () => {
-    it('should show validation errors when submitting empty form', async () => {
-      // Given
-      render(<LoginForm />);
-      
-      // When
-      await userEvent.click(screen.getByRole('button', { name: /login/i }));
-      
-      // Then
-      expect(await screen.findByText(/email is required/i)).toBeInTheDocument();
-      expect(await screen.findByText(/password is required/i)).toBeInTheDocument();
-    });
-  });
-});
 ```
+describe('LoginForm')
+  describe('Successful login')
+    it('should redirect to dashboard after valid login')
+      // Given - render the component
+      // When - simulate user input and actions
+      // Then - assert expected outcomes
+
+  describe('Invalid password')
+    it('should show error message for invalid credentials')
+      // Given - setup mock to return error
+      // When - enter credentials and submit
+      // Then - assert error message visible
+
+  describe('Empty form submission')
+    it('should show validation errors')
+      // Given - render form
+      // When - submit without input
+      // Then - assert validation errors visible
+```
+
+> **Stack examples**: See `stacks/[your-stack]/workflows/bdd-tdd-frontend.md` for concrete code examples.
 
 ---
 
@@ -143,280 +112,125 @@ describe('LoginForm', () => {
 3. REFACTOR → Improve code, keep tests green
 ```
 
-### Example: Building a SearchInput Component
+### Example Flow
 
-#### Step 1: RED - Write Failing Test
+1. **RED** - Write a test for behavior that doesn't exist yet
+2. **GREEN** - Write the simplest code to make test pass
+3. **REFACTOR** - Clean up while keeping tests green
+4. **Repeat** - Add next behavior
 
-```typescript
-// src/components/SearchInput.test.tsx
+### TDD Benefits
 
-describe('SearchInput', () => {
-  it('should render an input with placeholder', () => {
-    render(<SearchInput placeholder="Search..." />);
-    
-    expect(screen.getByPlaceholderText('Search...')).toBeInTheDocument();
-  });
-});
-```
-
-#### Step 2: GREEN - Make It Pass
-
-```typescript
-// src/components/SearchInput.tsx
-
-interface SearchInputProps {
-  placeholder?: string;
-}
-
-export function SearchInput({ placeholder }: SearchInputProps) {
-  return <input placeholder={placeholder} />;
-}
-```
-
-#### Step 3: Add More Tests (RED again)
-
-```typescript
-describe('SearchInput', () => {
-  it('should render an input with placeholder', () => { /* ... */ });
-  
-  it('should call onChange with debounced value', async () => {
-    const handleChange = vi.fn();
-    render(<SearchInput onChange={handleChange} debounceMs={300} />);
-    
-    await userEvent.type(screen.getByRole('textbox'), 'hello');
-    
-    // Should not call immediately
-    expect(handleChange).not.toHaveBeenCalled();
-    
-    // Should call after debounce
-    await waitFor(() => {
-      expect(handleChange).toHaveBeenCalledWith('hello');
-    }, { timeout: 400 });
-  });
-  
-  it('should show loading indicator when isLoading is true', () => {
-    render(<SearchInput isLoading />);
-    
-    expect(screen.getByRole('status')).toBeInTheDocument();
-  });
-});
-```
-
-#### Step 4: GREEN - Implement Features
-
-```typescript
-// src/components/SearchInput.tsx
-
-interface SearchInputProps {
-  placeholder?: string;
-  onChange?: (value: string) => void;
-  debounceMs?: number;
-  isLoading?: boolean;
-}
-
-export function SearchInput({ 
-  placeholder, 
-  onChange, 
-  debounceMs = 300,
-  isLoading 
-}: SearchInputProps) {
-  const [value, setValue] = useState('');
-  
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onChange?.(value);
-    }, debounceMs);
-    
-    return () => clearTimeout(timer);
-  }, [value, debounceMs, onChange]);
-  
-  return (
-    <div>
-      <input 
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-      {isLoading && <span role="status">Loading...</span>}
-    </div>
-  );
-}
-```
+- Forces thinking about requirements first
+- Creates documentation through tests
+- Enables safe refactoring
+- Catches regressions immediately
 
 ---
 
 ## Testing Patterns
 
-### Component Testing
+### Arrange-Act-Assert (AAA)
 
-```typescript
-// Arrange-Act-Assert pattern
-it('should do something', async () => {
-  // Arrange
-  const props = { /* ... */ };
-  render(<Component {...props} />);
-  
-  // Act
-  await userEvent.click(screen.getByRole('button'));
-  
-  // Assert
-  expect(screen.getByText('Result')).toBeInTheDocument();
-});
+```
+// Arrange - set up test conditions
+[setup component, mock data, configure environment]
+
+// Act - perform the action being tested
+[simulate user action or trigger behavior]
+
+// Assert - verify the expected outcome
+[check results match expectations]
 ```
 
-### Testing User Events
+### Given-When-Then (BDD style)
 
-```typescript
-import userEvent from '@testing-library/user-event';
-
-// Always use userEvent over fireEvent
-it('should handle user input', async () => {
-  const user = userEvent.setup();
-  render(<Form />);
-  
-  await user.type(screen.getByLabelText(/name/i), 'John');
-  await user.click(screen.getByRole('button', { name: /submit/i }));
-  
-  expect(screen.getByText(/success/i)).toBeInTheDocument();
-});
 ```
+// Given - preconditions
+[the component is rendered with specific props]
 
-### Testing Async Behavior
+// When - action
+[user clicks button / enters text / submits form]
 
-```typescript
-import { waitFor, screen } from '@testing-library/react';
-
-it('should load data', async () => {
-  render(<UserProfile userId="123" />);
-  
-  // Wait for loading to finish
-  await waitFor(() => {
-    expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
-  });
-  
-  // Or use findBy (auto-waits)
-  expect(await screen.findByText('John Doe')).toBeInTheDocument();
-});
-```
-
-### Mocking API Calls
-
-```typescript
-import { http, HttpResponse } from 'msw';
-import { setupServer } from 'msw/node';
-
-const server = setupServer(
-  http.get('/api/users/:id', ({ params }) => {
-    return HttpResponse.json({
-      id: params.id,
-      name: 'John Doe',
-    });
-  })
-);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
-it('should display user data', async () => {
-  render(<UserProfile userId="123" />);
-  
-  expect(await screen.findByText('John Doe')).toBeInTheDocument();
-});
-```
-
-### Testing Hooks
-
-```typescript
-import { renderHook, act } from '@testing-library/react';
-
-describe('useCounter', () => {
-  it('should increment counter', () => {
-    const { result } = renderHook(() => useCounter());
-    
-    expect(result.current.count).toBe(0);
-    
-    act(() => {
-      result.current.increment();
-    });
-    
-    expect(result.current.count).toBe(1);
-  });
-});
+// Then - expected outcome
+[specific result is visible / action is triggered]
 ```
 
 ---
 
-## E2E Testing
+## What to Test
 
-### Playwright Example
+### Component Tests
 
-```typescript
-// e2e/login.spec.ts
+| Test | Example |
+|------|---------|
+| Renders correctly | Shows expected content with given props |
+| Handles interactions | Click, type, submit behaviors work |
+| Shows states | Loading, error, empty, success states |
+| Conditional rendering | Shows/hides based on conditions |
+| Accessibility | Has proper labels, roles, keyboard support |
 
-import { test, expect } from '@playwright/test';
+### Integration Tests
 
-test.describe('Login Flow', () => {
-  test('should login successfully', async ({ page }) => {
-    // Given
-    await page.goto('/login');
-    
-    // When
-    await page.getByLabel('Email').fill('user@example.com');
-    await page.getByLabel('Password').fill('password123');
-    await page.getByRole('button', { name: 'Login' }).click();
-    
-    // Then
-    await expect(page).toHaveURL('/dashboard');
-    await expect(page.getByText('Welcome back')).toBeVisible();
-  });
-  
-  test('should show error for invalid credentials', async ({ page }) => {
-    await page.goto('/login');
-    
-    await page.getByLabel('Email').fill('user@example.com');
-    await page.getByLabel('Password').fill('wrongpassword');
-    await page.getByRole('button', { name: 'Login' }).click();
-    
-    await expect(page.getByText('Invalid credentials')).toBeVisible();
-    await expect(page).toHaveURL('/login');
-  });
-});
-```
+| Test | Example |
+|------|---------|
+| Component communication | Parent-child data flow |
+| State updates | Actions trigger correct state changes |
+| Navigation | Routes change correctly |
+| Form flows | Multi-step processes work |
+
+### E2E Tests
+
+| Test | Example |
+|------|---------|
+| Critical paths | Login → Dashboard → Action → Logout |
+| User journeys | Complete purchase flow |
+| Cross-page flows | Search → Results → Detail → Back |
 
 ---
 
-## Test File Organization
+## Test Organization
 
 ```
 src/
 ├── components/
-│   ├── Button/
-│   │   ├── Button.tsx
-│   │   ├── Button.test.tsx      # Component tests
-│   │   └── index.ts
-│   └── SearchInput/
-│       ├── SearchInput.tsx
-│       ├── SearchInput.test.tsx
-│       └── index.ts
+│   └── Button/
+│       ├── Button.[ext]
+│       ├── Button.test.[ext]     # Component tests
+│       └── index.[ext]
 ├── features/
 │   └── auth/
-│       ├── LoginForm.tsx
-│       ├── LoginForm.test.tsx   # Feature component tests
-│       └── useAuth.test.ts      # Hook tests
-├── hooks/
-│   ├── useDebounce.ts
-│   └── useDebounce.test.ts
+│       ├── LoginForm.[ext]
+│       └── LoginForm.test.[ext]  # Feature tests
 └── utils/
-    ├── format.ts
-    └── format.test.ts
+    ├── format.[ext]
+    └── format.test.[ext]         # Unit tests
 
 e2e/
-├── auth.spec.ts                  # E2E: Auth flows
-├── checkout.spec.ts              # E2E: Checkout flows
-└── fixtures/
-    └── users.json
+├── auth.spec.[ext]               # E2E: Auth flows
+└── checkout.spec.[ext]           # E2E: Checkout flows
 ```
+
+---
+
+## Mocking Strategies
+
+### When to Mock
+
+| Mock | When |
+|------|------|
+| API calls | Always mock external HTTP requests |
+| Time/dates | When testing time-dependent behavior |
+| External services | Third-party integrations |
+| Complex dependencies | Heavy or slow dependencies |
+
+### When NOT to Mock
+
+| Don't Mock | Why |
+|------------|-----|
+| The component under test | You're testing it! |
+| Simple utilities | Test them directly |
+| Child components (usually) | Test integration |
 
 ---
 
@@ -426,25 +240,30 @@ e2e/
 - [ ] Feature spec/requirements clear
 - [ ] Acceptance criteria defined
 - [ ] Edge cases identified
+- [ ] Test data planned
 
 ### Component Tests
 - [ ] Renders correctly with props
 - [ ] Handles user interactions
 - [ ] Shows loading/error states
 - [ ] Accessible (roles, labels)
+- [ ] Edge cases covered
 
 ### Integration Tests
 - [ ] Components work together
 - [ ] Data flows correctly
 - [ ] Navigation works
+- [ ] State updates properly
 
 ### E2E Tests
 - [ ] Critical user journeys covered
 - [ ] Happy path tested
 - [ ] Error scenarios tested
+- [ ] Cross-browser (if needed)
 
-### Quality
+### Test Quality
 - [ ] Tests are readable
 - [ ] Tests are independent
 - [ ] No flaky tests
+- [ ] Fast enough for CI
 - [ ] Coverage goals met

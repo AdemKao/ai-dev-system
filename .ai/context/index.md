@@ -1,199 +1,151 @@
 # Context Index
 
-> Central index for all context files in ai-dev-system.
+> Lightweight routing table for context loading. **Read this first, load others as needed.**
 
-## Quick Reference
+## Quick Route
 
-| Category | Path | Description |
-|----------|------|-------------|
-| **Standards** | `.ai/context/core/standards/` | Coding standards and conventions |
-| **Workflows** | `.ai/context/core/workflows/` | Development workflows and processes |
-| **Skills** | `.ai/skills/` | Executable skill guides |
-| **Templates** | `.ai/templates/` | File and document templates |
-| **Stacks** | `.ai/stacks/` | Technology-specific configurations |
+Load **only** the files relevant to your current task:
 
----
+| Task | Load These Files |
+|------|------------------|
+| **Writing code** | `standards/code-quality.md` |
+| **API development** | `standards/openapi.md` + `workflows/contract-driven.md` |
+| **Database design** | `standards/dbml.md` |
+| **Writing tests** | `workflows/bdd-tdd.md` (or frontend/backend specific) |
+| **Code review** | `workflows/code-review.md` |
+| **UI/UX work** | `skills/ui-ux/SKILL.md` |
+| **Documentation** | `standards/documentation.md` |
+| **Git operations** | `workflows/git-workflow.md` |
+| **Delegating tasks** | `workflows/delegation.md` |
 
-## Standards
+## Stack-Specific Loading
 
-Code quality, naming, security, and testing standards.
+**Only load stack files when user specifies a stack or it's detected from project.**
 
-| File | Trigger Keywords | Description |
-|------|-----------------|-------------|
-| `code-quality.md` | code quality, clean code, best practices | General code quality guidelines |
-| `dbml.md` | dbml, database, schema, tables | Database schema design (DBML) |
-| `documentation.md` | docs, documentation, comments | Documentation standards |
-| `naming.md` | naming, conventions, variables | Naming conventions |
-| `openapi.md` | openapi, swagger, api spec, endpoints | API specification (OpenAPI) |
-| `security.md` | security, auth, validation | Security best practices |
-| `testing.md` | tests, testing, coverage | Testing standards |
+| Stack | When to Load | Files |
+|-------|--------------|-------|
+| `react-typescript` | `.tsx` files, React project | `stacks/react-typescript/standards/` |
+| `php-laravel` | `.php` files, Laravel project | `stacks/php-laravel/standards/` |
+| `node-express` | Express app detected | `stacks/node-express/standards/` |
 
-### Load Command
-
-```
-Read .ai/context/core/standards/[file].md before writing code.
-```
-
----
-
-## Workflows
-
-Development processes and procedures.
-
-| File | Trigger Keywords | Description |
-|------|-----------------|-------------|
-| `bdd-tdd.md` | bdd, tdd, test-driven | BDD/TDD development workflow |
-| `bdd-tdd-frontend.md` | frontend testing, react testing | Frontend BDD/TDD workflow |
-| `bdd-tdd-backend.md` | backend testing, api testing | Backend BDD/TDD workflow |
-| `code-review.md` | review, pr, pull request | Code review process |
-| `contract-driven.md` | contract, api-first, dbml, openapi | Contract-driven development |
-| `delegation.md` | delegate, agent, subagent | Agent delegation workflow |
-| `git-workflow.md` | git, branch, commit | Git branching and commit workflow |
-
-### Load Command
+### Stack Detection
 
 ```
-Read .ai/context/core/workflows/[file].md before starting workflow.
+If package.json contains "react" → react-typescript
+If composer.json contains "laravel" → php-laravel
+If package.json contains "express" → node-express
 ```
 
 ---
 
-## Skills
+## Loading Rules
 
-Executable guides for specific tasks.
+### ✅ DO
 
-| Skill | Trigger Keywords | Description |
-|-------|-----------------|-------------|
-| `code-review/` | review code, check PR | Code review checklist and process |
-| `commit/` | commit, git commit | Commit message and process |
-| `debug/` | debug, fix bug, troubleshoot | Debugging methodology |
-| `documentation/` | write docs, document | Documentation writing guide |
-| `feature-implementation/` | implement feature, build | Feature implementation process |
-| `refactor/` | refactor, improve code | Refactoring guide |
+- Load **1-2 relevant files** per task
+- Check index first, then load specific files
+- Load stack files only when stack is clear
+- Load skills only when triggered
 
-### Load Command
+### ❌ DON'T
+
+- Load all standards at once
+- Load all workflows at once
+- Load unrelated stack files
+- Pre-load "just in case"
+
+---
+
+## File Reference
+
+### Standards (load one at a time)
+
+| File | Keywords | Size |
+|------|----------|------|
+| `code-quality.md` | code, quality, clean | ~9KB |
+| `dbml.md` | database, schema, tables | ~8KB |
+| `documentation.md` | docs, comments, readme | ~7KB |
+| `naming.md` | naming, conventions | ~7KB |
+| `openapi.md` | api, swagger, endpoints | ~15KB |
+| `security.md` | security, auth, validation | ~7KB |
+| `testing.md` | tests, coverage | ~8KB |
+
+### Workflows (load one at a time)
+
+| File | Keywords | Size |
+|------|----------|------|
+| `bdd-tdd.md` | tdd, bdd, test-driven | ~5KB |
+| `bdd-tdd-frontend.md` | frontend tests, component tests | ~8KB |
+| `bdd-tdd-backend.md` | backend tests, api tests | ~9KB |
+| `code-review.md` | review, PR | ~4KB |
+| `contract-driven.md` | contracts, api-first | ~6KB |
+| `delegation.md` | delegate, agent | ~6KB |
+| `git-workflow.md` | git, branch, commit | ~6KB |
+
+### Skills (load only when triggered)
+
+| Skill | Trigger | Size |
+|-------|---------|------|
+| `ui-ux/SKILL.md` | UI, design, styling | ~10KB |
+| `code-review/SKILL.md` | review code | ~3KB |
+| `debug/SKILL.md` | debug, fix bug | ~3KB |
+| `commit/SKILL.md` | commit changes | ~2KB |
+
+### Agents (load for delegation)
+
+| Agent | When to Use |
+|-------|-------------|
+| `orchestrator.md` | Complex multi-step tasks |
+| `oracle.md` | Architecture decisions, debugging |
+| `frontend-engineer.md` | Frontend tasks |
+| `backend-engineer.md` | Backend tasks |
+| `tester.md` | Testing tasks |
+| `explorer.md` | Codebase search |
+| `librarian.md` | Documentation |
+
+---
+
+## Example Loading Scenarios
+
+### Scenario: "Create a new API endpoint"
 
 ```
-Load skill from .ai/skills/[skill-name]/SKILL.md
+1. Load: standards/openapi.md (API design)
+2. Load: workflows/contract-driven.md (workflow)
+3. If Laravel: Load stacks/php-laravel/skills/controller/SKILL.md
+4. If Express: Load stacks/node-express/skills/api-endpoint/SKILL.md
+```
+
+### Scenario: "Fix this bug"
+
+```
+1. Load: skills/debug/SKILL.md
+2. Maybe: standards/code-quality.md (if code changes needed)
+```
+
+### Scenario: "Build a login page"
+
+```
+1. Load: skills/ui-ux/SKILL.md
+2. If React: Load stacks/react-typescript/standards/react.md
+```
+
+### Scenario: "Review this PR"
+
+```
+1. Load: workflows/code-review.md
+2. Load: skills/code-review/SKILL.md
 ```
 
 ---
 
-## Technology Stacks
+## Token Budget Guideline
 
-Stack-specific configurations and skills.
+| Task Complexity | Max Files to Load |
+|-----------------|-------------------|
+| Simple (fix typo, small change) | 0-1 |
+| Medium (new feature, component) | 1-2 |
+| Complex (architecture, multi-file) | 2-3 |
+| Major (new system, refactor) | 3-4 |
 
-| Stack | Path | Includes |
-|-------|------|----------|
-| `react-typescript` | `.ai/stacks/react-typescript/` | React, TypeScript, Testing standards |
-
-### Stack Structure
-
-```
-.ai/stacks/[stack-name]/
-├── stack.json          # Stack metadata
-├── standards/          # Stack-specific standards
-│   ├── react.md
-│   ├── typescript.md
-│   └── testing.md
-└── skills/             # Stack-specific skills
-    ├── component/
-    ├── hook/
-    └── e2e-testing/
-```
-
----
-
-## Agents
-
-AI agents for specialized tasks.
-
-| Agent | Path | Role |
-|-------|------|------|
-| `orchestrator` | `.ai/agents/orchestrator.md` | Master coordinator for complex tasks |
-| `oracle` | `.ai/agents/oracle.md` | Architecture and debugging expert |
-| `librarian` | `.ai/agents/librarian.md` | Documentation and research |
-| `explorer` | `.ai/agents/explorer.md` | Fast codebase exploration |
-| `frontend-engineer` | `.ai/agents/frontend-engineer.md` | Frontend development |
-| `backend-engineer` | `.ai/agents/backend-engineer.md` | Backend development |
-| `tester` | `.ai/agents/tester.md` | Testing specialist |
-
----
-
-## Context Loading Rules
-
-### For Code Tasks
-
-```
-1. Load relevant standard: .ai/context/core/standards/code-quality.md
-2. Load stack standard: .ai/stacks/[stack]/standards/[framework].md
-3. Apply skill if specific task: .ai/skills/[skill]/SKILL.md
-```
-
-### For Workflow Tasks
-
-```
-1. Load workflow: .ai/context/core/workflows/[workflow].md
-2. Load related skills as needed
-```
-
-### For Delegation
-
-```
-1. Load delegation workflow: .ai/context/core/workflows/delegation.md
-2. Identify target agent: .ai/agents/[agent].md
-3. Create context bundle for agent
-```
-
----
-
-## Directory Structure
-
-```
-.ai/
-├── agents/                     # AI agent definitions
-│   ├── orchestrator.md
-│   ├── oracle.md
-│   ├── librarian.md
-│   ├── explorer.md
-│   ├── frontend-engineer.md
-│   ├── backend-engineer.md
-│   └── tester.md
-├── context/
-│   ├── core/
-│   │   ├── standards/         # Coding standards
-│   │   │   ├── code-quality.md
-│   │   │   ├── dbml.md
-│   │   │   ├── documentation.md
-│   │   │   ├── naming.md
-│   │   │   ├── openapi.md
-│   │   │   ├── security.md
-│   │   │   └── testing.md
-│   │   └── workflows/         # Development workflows
-│   │       ├── bdd-tdd.md
-│   │       ├── bdd-tdd-frontend.md
-│   │       ├── bdd-tdd-backend.md
-│   │       ├── code-review.md
-│   │       ├── contract-driven.md
-│   │       ├── delegation.md
-│   │       └── git-workflow.md
-│   ├── project/               # Project-specific context
-│   └── index.md               # This file
-├── skills/                    # Executable skill guides
-│   ├── code-review/
-│   ├── commit/
-│   ├── debug/
-│   ├── documentation/
-│   ├── feature-implementation/
-│   └── refactor/
-├── templates/                 # File templates
-│   ├── AGENTS.md.template
-│   ├── ai-config.json.template
-│   ├── EPIC.md.template
-│   └── FEATURE_SPEC.md.template
-└── stacks/                    # Technology stacks
-    └── react-typescript/
-        ├── stack.json
-        ├── standards/
-        └── skills/
-```
+**Target: Keep context loading under 20KB per task.**
