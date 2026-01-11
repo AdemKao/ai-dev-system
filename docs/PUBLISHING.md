@@ -13,8 +13,8 @@ npm config set //registry.npmjs.org/:_authToken YOUR_TOKEN
 ### 2. 確認 package name 可用
 
 ```bash
-npm search ai-dev-system
-# 如果名稱被佔用，考慮使用 scoped package: @your-username/ai-dev-system
+npm search ai-cowork
+# 已確認 ai-cowork 可用
 ```
 
 ## 發布流程
@@ -22,7 +22,7 @@ npm search ai-dev-system
 ### 1. Build CLI
 
 ```bash
-cd /path/to/ai-dev-system
+cd /path/to/ai-cowork
 npm run build
 ```
 
@@ -46,12 +46,12 @@ npm pack --dry-run
 mkdir /tmp/test-install && cd /tmp/test-install
 
 # 本地安裝
-npm pack /path/to/ai-dev-system
-npm install ai-dev-system-1.0.0.tgz
+npm pack /path/to/ai-cowork
+npm install ai-cowork-0.1.0.tgz
 
 # 測試 CLI
-npx ai-dev --help
-npx ai-dev init
+npx ai-cowork --help
+npx ai-cowork init
 
 # 清理
 cd .. && rm -rf /tmp/test-install
@@ -73,7 +73,7 @@ npm publish --access public
 # 全新目錄測試
 mkdir /tmp/verify && cd /tmp/verify
 npm init -y
-npx ai-dev init
+npx ai-cowork init
 ```
 
 ## 版本更新
@@ -81,13 +81,13 @@ npx ai-dev init
 ### 更新版本號
 
 ```bash
-# Patch (1.0.0 -> 1.0.1) - Bug fixes
+# Patch (0.1.0 -> 0.1.1) - Bug fixes
 npm version patch
 
-# Minor (1.0.0 -> 1.1.0) - New features
+# Minor (0.1.0 -> 0.2.0) - New features
 npm version minor
 
-# Major (1.0.0 -> 2.0.0) - Breaking changes
+# Major (0.1.0 -> 1.0.0) - Breaking changes / Stable release
 npm version major
 ```
 
@@ -106,7 +106,7 @@ npm publish
 
 ```json
 {
-  "name": "@ademkao/ai-dev-system"
+  "name": "@ademkao/ai-cowork"
 }
 ```
 
@@ -128,11 +128,14 @@ npm publish --access public
 
 ```bash
 # 全域安裝
-npm install -g ai-dev-system
+npm install -g ai-cowork
 
 # 或使用 npx（推薦）
-npx ai-dev-system init
+npx ai-cowork init
 
-# 或簡寫
-npx ai-dev init
+# 初始化特定技術棧
+npx ai-cowork init --stack react-typescript
+
+# 跳過提示
+npx ai-cowork init --yes
 ```

@@ -1,18 +1,18 @@
 {
-  "name": "ai-dev-system",
-  "version": "1.0.0",
+  "name": "ai-cowork",
+  "version": "0.1.0",
   "type": "module",
   "description": "Cross-stack AI development workflow system - Standards, workflows, and skills for AI-assisted development",
   "main": "cli/dist/index.js",
   "bin": {
-    "ai-dev": "./cli/bin/ai-dev.js"
+    "ai-cowork": "./cli/bin/ai-dev.js"
   },
   "scripts": {
     "build": "cd cli && npm run build",
     "dev": "cd cli && npm run dev",
     "prepublishOnly": "npm run build",
     "test": "echo \"No tests yet\" && exit 0",
-    "postinstall": "echo '✨ ai-dev-system installed! Run: npx ai-dev init'"
+    "postinstall": "echo '✨ ai-cowork installed! Run: npx ai-cowork init'"
   },
   "keywords": [
     "ai",
@@ -25,7 +25,7 @@
     "standards",
     "coding-assistant",
     "ai-agent",
-    "ai-dev",
+    "ai-cowork",
     "bdd",
     "tdd"
   ],
@@ -50,11 +50,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AdemKao/ai-dev-system.git"
+    "url": "git+https://github.com/AdemKao/ai-cowork.git"
   },
-  "homepage": "https://github.com/AdemKao/ai-dev-system#readme",
+  "homepage": "https://github.com/AdemKao/ai-cowork#readme",
   "bugs": {
-    "url": "https://github.com/AdemKao/ai-dev-system/issues"
+    "url": "https://github.com/AdemKao/ai-cowork/issues"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -1,6 +1,6 @@
-# Contributing to ai-dev-system
+# Contributing to ai-cowork
 
-Thank you for your interest in contributing to ai-dev-system! This document provides guidelines and information about contributing.
+Thank you for your interest in contributing to ai-cowork! This document provides guidelines and information about contributing.
 
 ## Table of Contents
 
@@ -21,12 +21,12 @@ Please read and follow our [Code of Conduct](./CODE_OF_CONDUCT.md). We expect al
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/ai-dev-system.git
-   cd ai-dev-system
+   git clone https://github.com/YOUR_USERNAME/ai-cowork.git
+   cd ai-cowork
    ```
 3. **Add the upstream remote**:
    ```bash
-   git remote add upstream https://github.com/AdemKao/ai-dev-system.git
+   git remote add upstream https://github.com/AdemKao/ai-cowork.git
    ```
 
 ## Development Setup
@@ -223,6 +223,6 @@ docs: update README with installation instructions
 
 ## Questions?
 
-Feel free to open a [GitHub Issue](https://github.com/AdemKao/ai-dev-system/issues) if you have any questions.
+Feel free to open a [GitHub Issue](https://github.com/AdemKao/ai-cowork/issues) if you have any questions.
 
 Thank you for contributing! 🎉

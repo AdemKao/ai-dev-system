@@ -8,17 +8,18 @@ import { registerSyncCommand } from './commands/sync.js';
 const program = new Command();
 
 program
-  .name('ai-dev')
-  .description('AI Dev System - Cross-stack AI development workflow')
-  .version('1.0.0');
+  .name('ai-cowork')
+  .description('AI Cowork - Cross-stack AI development workflow system')
+  .version('0.1.0');
 
 program
   .command('init')
   .description('Initialize ai-dev-system in a project')
-  .option('-s, --stack <stack>', 'Technology stack (react-typescript, php-laravel, node-express)')
+  .option('-s, --stack <stack>', 'Technology stack (react-typescript, php-laravel, node-express, none)')
   .option('-a, --ai <tool>', 'AI tool bridge (claude, opencode, cursor, agent, all)', 'all')
   .option('-d, --dir <directory>', 'Target directory', '.')
   .option('--no-bridge', 'Skip creating bridge directories')
+  .option('-y, --yes', 'Skip prompts, use defaults (no stack-specific files if undetected)')
   .action(init);
 
 program

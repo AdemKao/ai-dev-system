@@ -1,4 +1,4 @@
-<h1 align="center">🤖 ai-dev-system</h1>
+<h1 align="center">🤖 ai-cowork</h1>
 
 <p align="center">
   <strong>Portable AI Development Workflow System</strong><br>
@@ -34,7 +34,7 @@
 
 ---
 
-## Why ai-dev-system?
+## Why ai-cowork?
 
 Modern developers use AI coding assistants daily, but face common challenges:
 
@@ -43,7 +43,7 @@ Modern developers use AI coding assistants daily, but face common challenges:
 - **Repeated prompting** for the same tasks
 - **No standard workflow** for AI-assisted development
 
-**ai-dev-system** solves this by providing a **portable, standardized AI workflow** that travels with you across projects and AI tools.
+**ai-cowork** solves this by providing a **portable, standardized AI workflow** that travels with you across projects and AI tools.
 
 ### What it provides:
 
@@ -65,29 +65,29 @@ Perfect for **freelancers**, **consultants**, and **teams** working across multi
 
 ## Installation
 
-### Using Bun (Recommended)
+### Using npm (Recommended)
 
 ```bash
 # Install globally
-bun install -g ai-dev-cli
+npm install -g ai-cowork
 
-# Or run directly
-bunx ai-dev-cli init
+# Or run directly with npx
+npx ai-cowork init
 ```
 
-### Using npm
+### Using Bun
 
 ```bash
-npm install -g ai-dev-cli
+bun install -g ai-cowork
 ```
 
 ### From Source
 
 ```bash
-git clone https://github.com/AdemKao/ai-dev-system.git
-cd ai-dev-system/cli
-bun install
-bun link
+git clone https://github.com/AdemKao/ai-cowork.git
+cd ai-cowork/cli
+npm install
+npm link
 ```
 
 ## Quick Start
@@ -98,11 +98,14 @@ bun link
 # Navigate to your project
 cd your-project
 
-# Initialize with ai-dev-system
-ai-dev init
+# Initialize with ai-cowork
+ai-cowork init
 
 # Or specify a stack
-ai-dev init --stack react-typescript
+ai-cowork init --stack react-typescript
+
+# Skip prompts (use defaults)
+ai-cowork init --yes
 ```
 
 This creates a `.ai/` directory with:
@@ -119,13 +122,13 @@ This creates a `.ai/` directory with:
 
 ```bash
 # Sync to OpenCode
-ai-dev sync opencode
+ai-cowork sync opencode
 
 # Sync to Claude Code
-ai-dev sync claude
+ai-cowork sync claude
 
 # Sync to all supported tools
-ai-dev sync all
+ai-cowork sync all
 ```
 
 ### 3. Start Coding with AI
@@ -136,20 +139,23 @@ In OpenCode or Claude Code, use your skills:
 /code-review     # Run code review skill
 /debug           # Run debug skill
 /commit          # Generate commit message
+/notify          # Send notification when task completes
 ```
 
 ## CLI Commands
 
 | Command | Description |
 |---------|-------------|
-| `ai-dev init` | Initialize ai-dev-system in a project |
-| `ai-dev list` | List available stacks, skills, and agents |
-| `ai-dev add stack <name>` | Add a tech stack to your project |
-| `ai-dev add skill <name>` | Add a skill to your project |
-| `ai-dev sync opencode` | Generate OpenCode configuration |
-| `ai-dev sync claude` | Generate Claude Code configuration |
-| `ai-dev sync all` | Sync to all AI tools |
-| `ai-dev update` | Update ai-dev-system |
+| `ai-cowork init` | Initialize ai-cowork in a project |
+| `ai-cowork init --stack <name>` | Initialize with specific stack |
+| `ai-cowork init --yes` | Initialize with defaults (skip prompts) |
+| `ai-cowork list` | List available stacks, skills, and agents |
+| `ai-cowork add stack <name>` | Add a tech stack to your project |
+| `ai-cowork add skill <name>` | Add a skill to your project |
+| `ai-cowork sync opencode` | Generate OpenCode configuration |
+| `ai-cowork sync claude` | Generate Claude Code configuration |
+| `ai-cowork sync all` | Sync to all AI tools |
+| `ai-cowork update` | Update ai-cowork |
 
 ## Available Stacks
 
@@ -172,12 +178,15 @@ In OpenCode or Claude Code, use your skills:
 | `refactor` | Code refactoring guidance |
 | `documentation` | Documentation generation |
 | `feature-implementation` | Feature planning and implementation |
+| `feature-decompose` | Break down large features into stacked PRs |
+| `worktree-agent` | Parallel development with git worktrees |
+| `notify` | Send notifications (Telegram, Desktop) when tasks complete |
 | `ui-ux` | UI/UX development guidelines |
 
 ## Project Structure
 
 ```
-ai-dev-system/
+ai-cowork/
 ├── .ai/
 │   ├── context/           # Core standards and workflows
 │   │   ├── core/
@@ -196,7 +205,7 @@ ai-dev-system/
 
 ### OpenCode
 
-After running `ai-dev sync opencode`:
+After running `ai-cowork sync opencode`:
 
 ```
 .opencode/
@@ -210,7 +219,7 @@ AGENTS.md           # Project context
 
 ### Claude Code
 
-After running `ai-dev sync claude`:
+After running `ai-cowork sync claude`:
 
 ```
 .claude/
@@ -237,6 +246,15 @@ Behavior-driven and test-driven development:
 - **Frontend**: Component tests → Implementation → E2E tests
 - **Backend**: Feature spec → Unit tests → Implementation → Integration tests
 
+### Stacked Development
+
+For large features, use stacked PRs:
+
+1. **Decompose** → Break feature into small, reviewable chunks
+2. **Stack** → Create dependent branches
+3. **Review** → Review each PR independently
+4. **Merge** → Merge bottom-up
+
 ## How It Works
 
 ```
@@ -249,16 +267,16 @@ Behavior-driven and test-driven development:
 │  ├── agents/         ← Specialized AI agents                │
 │  └── stacks/         ← Tech stack configs                   │
 ├─────────────────────────────────────────────────────────────┤
-│                    ai-dev sync                              │
+│                    ai-cowork sync                           │
 ├──────────────┬──────────────┬───────────────────────────────┤
 │  .opencode/  │   .claude/   │        (other tools)          │
 │  OpenCode    │  Claude Code │         Cursor, etc.          │
 └──────────────┴──────────────┴───────────────────────────────┘
 ```
 
-1. **Initialize** - `ai-dev init` creates `.ai/` with standards and skills
+1. **Initialize** - `ai-cowork init` creates `.ai/` with standards and skills
 2. **Customize** - Add your stack, modify standards to fit your workflow
-3. **Sync** - `ai-dev sync opencode` generates tool-specific configs
+3. **Sync** - `ai-cowork sync opencode` generates tool-specific configs
 4. **Code** - Your AI assistant now follows your standards automatically
 
 ## Contributing
@@ -267,14 +285,14 @@ Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelin
 
 ```bash
 # Clone the repository
-git clone https://github.com/AdemKao/ai-dev-system.git
-cd ai-dev-system
+git clone https://github.com/AdemKao/ai-cowork.git
+cd ai-cowork
 
 # Install CLI dependencies
-cd cli && bun install
+cd cli && npm install
 
 # Run in development mode
-bun run dev -- --help
+npm run dev -- --help
 ```
 
 ## License

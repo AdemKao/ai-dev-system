@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-01-11
+
 ### Added
 - Initial project structure with `.ai/` directory
-- CLI tool (`ai-dev`) with commands: `init`, `list`, `add`, `sync`, `update`
+- CLI tool (`ai-cowork`) with commands: `init`, `list`, `add`, `sync`, `update`
+- Interactive stack selection when stack cannot be detected
+- `--yes` flag to skip prompts and use defaults
 - Core standards: code quality, naming, security, documentation, testing
 - Core workflows: BDD/TDD, code review, git workflow, contract-driven development
 - Skills: code-review, debug, commit, refactor, documentation, feature-implementation, ui-ux, feature-decompose, worktree-agent, notify
@@ -27,11 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CONTRIBUTING.md with contribution guidelines
 - CODE_OF_CONDUCT.md
 
-## [1.0.0] - Coming Soon
-
-Initial public release.
-
 ---
 
-[Unreleased]: https://github.com/AdemKao/ai-dev-system/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/AdemKao/ai-dev-system/releases/tag/v1.0.0
+[Unreleased]: https://github.com/AdemKao/ai-cowork/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/AdemKao/ai-cowork/releases/tag/v0.1.0

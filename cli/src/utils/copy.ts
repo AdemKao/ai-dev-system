@@ -4,6 +4,7 @@ import { Stack, AI_BRIDGES, AITool, directoryExists } from './paths.js';
 
 interface CopyOptions {
   stack?: Stack;
+  skipStacks?: boolean; // When true, don't copy any stacks
   aiTools: AITool[] | 'all';
   overwrite?: boolean;
 }
@@ -54,8 +55,12 @@ export async function copyAiDirectory(
       }
     }
 
-    // Copy stack-specific files if stack is specified
-    if (options.stack) {
+    // Handle stacks based on options
+    if (options.skipStacks) {
+      // Don't copy any stacks
+      result.skipped.push('.ai/stacks (skipped - no stack selected)');
+    } else if (options.stack) {
+      // Copy specific stack only
       const stackSrc = path.join(sourceDir, 'stacks', options.stack);
       const stackDest = path.join(targetAiDir, 'stacks', options.stack);
       
@@ -66,13 +71,13 @@ export async function copyAiDirectory(
         result.errors.push(`Stack not found: ${options.stack}`);
       }
     } else {
-      // Copy all stacks if no specific stack
+      // No stack specified and not skipping - copy all stacks
       const stacksSrc = path.join(sourceDir, 'stacks');
       const stacksDest = path.join(targetAiDir, 'stacks');
       
       if (await directoryExists(stacksSrc)) {
         await fs.copy(stacksSrc, stacksDest, { overwrite: options.overwrite });
-        result.copied.push('.ai/stacks');
+        result.copied.push('.ai/stacks (all)');
       }
     }
 

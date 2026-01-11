@@ -1,9 +1,9 @@
 {
-  "name": "ai-dev-cli-src",
-  "version": "1.0.0",
+  "name": "ai-cowork-cli-src",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "CLI source for ai-dev-system (build from root)",
+  "description": "CLI source for ai-cowork (build from root)",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

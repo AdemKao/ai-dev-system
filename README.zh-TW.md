@@ -1,4 +1,4 @@
-<h1 align="center">🤖 ai-dev-system</h1>
+<h1 align="center">🤖 ai-cowork</h1>
 
 <p align="center">
   <strong>可攜式 AI 開發工作流系統</strong><br>
@@ -34,7 +34,7 @@
 
 ---
 
-## 為什麼選擇 ai-dev-system？
+## 為什麼選擇 ai-cowork？
 
 現代開發者每天都在使用 AI 編程助手，但面臨常見的挑戰：
 
@@ -43,7 +43,7 @@
 - **重複提示** - 同樣的任務需要反覆說明
 - **缺乏標準流程** - AI 輔助開發沒有統一的工作流
 
-**ai-dev-system** 提供一個**可攜式、標準化的 AI 工作流**，讓你的開發習慣跟隨你跨越專案和 AI 工具。
+**ai-cowork** 提供一個**可攜式、標準化的 AI 工作流**，讓你的開發習慣跟隨你跨越專案和 AI 工具。
 
 ### 它提供：
 
@@ -65,29 +65,29 @@
 
 ## 安裝
 
-### 使用 Bun（推薦）
+### 使用 npm（推薦）
 
 ```bash
 # 全域安裝
-bun install -g ai-dev-cli
+npm install -g ai-cowork
 
-# 或直接執行
-bunx ai-dev-cli init
+# 或直接使用 npx
+npx ai-cowork init
 ```
 
-### 使用 npm
+### 使用 Bun
 
 ```bash
-npm install -g ai-dev-cli
+bun install -g ai-cowork
 ```
 
 ### 從原始碼安裝
 
 ```bash
-git clone https://github.com/AdemKao/ai-dev-system.git
-cd ai-dev-system/cli
-bun install
-bun link
+git clone https://github.com/AdemKao/ai-cowork.git
+cd ai-cowork/cli
+npm install
+npm link
 ```
 
 ## 快速開始
@@ -98,11 +98,14 @@ bun link
 # 進入您的專案目錄
 cd your-project
 
-# 使用 ai-dev-system 初始化
-ai-dev init
+# 使用 ai-cowork 初始化
+ai-cowork init
 
 # 或指定技術棧
-ai-dev init --stack react-typescript
+ai-cowork init --stack react-typescript
+
+# 跳過提示（使用預設值）
+ai-cowork init --yes
 ```
 
 這將創建一個 `.ai/` 目錄：
@@ -119,13 +122,13 @@ ai-dev init --stack react-typescript
 
 ```bash
 # 同步到 OpenCode
-ai-dev sync opencode
+ai-cowork sync opencode
 
 # 同步到 Claude Code
-ai-dev sync claude
+ai-cowork sync claude
 
 # 同步到所有支援的工具
-ai-dev sync all
+ai-cowork sync all
 ```
 
 ### 3. 開始使用 AI 編程
@@ -136,20 +139,23 @@ ai-dev sync all
 /code-review     # 執行程式碼審查 skill
 /debug           # 執行除錯 skill
 /commit          # 生成 commit 訊息
+/notify          # 任務完成時發送通知
 ```
 
 ## CLI 指令
 
 | 指令 | 說明 |
 |------|------|
-| `ai-dev init` | 在專案中初始化 ai-dev-system |
-| `ai-dev list` | 列出可用的 stacks、skills 和 agents |
-| `ai-dev add stack <name>` | 將技術棧添加到專案 |
-| `ai-dev add skill <name>` | 將 skill 添加到專案 |
-| `ai-dev sync opencode` | 生成 OpenCode 配置 |
-| `ai-dev sync claude` | 生成 Claude Code 配置 |
-| `ai-dev sync all` | 同步到所有 AI 工具 |
-| `ai-dev update` | 更新 ai-dev-system |
+| `ai-cowork init` | 在專案中初始化 ai-cowork |
+| `ai-cowork init --stack <name>` | 使用指定技術棧初始化 |
+| `ai-cowork init --yes` | 使用預設值初始化（跳過提示） |
+| `ai-cowork list` | 列出可用的 stacks、skills 和 agents |
+| `ai-cowork add stack <name>` | 將技術棧添加到專案 |
+| `ai-cowork add skill <name>` | 將 skill 添加到專案 |
+| `ai-cowork sync opencode` | 生成 OpenCode 配置 |
+| `ai-cowork sync claude` | 生成 Claude Code 配置 |
+| `ai-cowork sync all` | 同步到所有 AI 工具 |
+| `ai-cowork update` | 更新 ai-cowork |
 
 ## 可用的技術棧
 
@@ -172,12 +178,15 @@ ai-dev sync all
 | `refactor` | 程式碼重構指南 |
 | `documentation` | 文件生成 |
 | `feature-implementation` | 功能規劃和實作 |
+| `feature-decompose` | 將大型功能拆分為堆疊式 PR |
+| `worktree-agent` | 使用 git worktrees 進行平行開發 |
+| `notify` | 任務完成時發送通知（Telegram、桌面） |
 | `ui-ux` | UI/UX 開發指南 |
 
 ## 專案結構
 
 ```
-ai-dev-system/
+ai-cowork/
 ├── .ai/
 │   ├── context/           # 核心標準和工作流
 │   │   ├── core/
@@ -196,7 +205,7 @@ ai-dev-system/
 
 ### OpenCode
 
-執行 `ai-dev sync opencode` 後：
+執行 `ai-cowork sync opencode` 後：
 
 ```
 .opencode/
@@ -210,7 +219,7 @@ AGENTS.md           # 專案上下文
 
 ### Claude Code
 
-執行 `ai-dev sync claude` 後：
+執行 `ai-cowork sync claude` 後：
 
 ```
 .claude/
@@ -237,6 +246,15 @@ CLAUDE.md           # 專案上下文
 - **前端**：元件測試 → 實作 → E2E 測試
 - **後端**：功能規格 → 單元測試 → 實作 → 整合測試
 
+### 堆疊式開發
+
+對於大型功能，使用堆疊式 PR：
+
+1. **分解** → 將功能拆分為可審查的小塊
+2. **堆疊** → 創建相依的分支
+3. **審查** → 獨立審查每個 PR
+4. **合併** → 自底向上合併
+
 ## 運作原理
 
 ```
@@ -249,16 +267,16 @@ CLAUDE.md           # 專案上下文
 │  ├── agents/         ← 專門的 AI agents                     │
 │  └── stacks/         ← 技術棧配置                           │
 ├─────────────────────────────────────────────────────────────┤
-│                    ai-dev sync                              │
+│                    ai-cowork sync                           │
 ├──────────────┬──────────────┬───────────────────────────────┤
 │  .opencode/  │   .claude/   │        (其他工具)              │
 │  OpenCode    │  Claude Code │       Cursor 等               │
 └──────────────┴──────────────┴───────────────────────────────┘
 ```
 
-1. **初始化** - `ai-dev init` 創建包含標準和 skills 的 `.ai/`
+1. **初始化** - `ai-cowork init` 創建包含標準和 skills 的 `.ai/`
 2. **自定義** - 添加你的技術棧，調整標準以符合你的工作流
-3. **同步** - `ai-dev sync opencode` 生成工具專屬的配置
+3. **同步** - `ai-cowork sync opencode` 生成工具專屬的配置
 4. **開發** - 你的 AI 助手現在自動遵循你的標準
 
 ## 貢獻
@@ -267,14 +285,14 @@ CLAUDE.md           # 專案上下文
 
 ```bash
 # Clone 專案
-git clone https://github.com/AdemKao/ai-dev-system.git
-cd ai-dev-system
+git clone https://github.com/AdemKao/ai-cowork.git
+cd ai-cowork
 
 # 安裝 CLI 依賴
-cd cli && bun install
+cd cli && npm install
 
 # 以開發模式執行
-bun run dev -- --help
+npm run dev -- --help
 ```
 
 ## 授權
