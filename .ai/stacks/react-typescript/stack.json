@@ -1,7 +1,7 @@
 {
   "name": "react-typescript",
   "description": "React + TypeScript + Vite stack",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": {
     "runtime": [
       "react",
@@ -32,25 +32,42 @@
       "msw"
     ]
   },
-  "structure": {
-    "src": {
-      "app": "Route definitions and app setup",
-      "features": "Feature modules (vertical slices)",
-      "shared": "Shared components, hooks, utils",
-      "services": "External service integrations",
-      "store": "Global state (Zustand)",
-      "styles": "Global styles",
-      "types": "Shared TypeScript types",
-      "test": "Test utilities and setup"
-    },
-    "e2e": "End-to-end tests"
+  "architectures": {
+    "default": "feature-based",
+    "options": {
+      "feature-based": {
+        "description": "Simple feature-based structure for small-medium apps",
+        "doc": "architectures/feature-based.md",
+        "structure": {
+          "src/app": "App setup, routes, providers",
+          "src/features": "Feature modules (vertical slices)",
+          "src/shared": "Shared components, hooks, utils",
+          "src/services": "External service integrations",
+          "src/types": "Global TypeScript types"
+        }
+      },
+      "fsd": {
+        "description": "Feature-Sliced Design for large-scale apps",
+        "doc": "architectures/fsd.md",
+        "structure": {
+          "src/app": "App initialization, providers, routing",
+          "src/pages": "Full page compositions",
+          "src/widgets": "Large self-contained UI blocks",
+          "src/features": "User interactions and actions",
+          "src/entities": "Business domain entities",
+          "src/shared": "Reusable foundation (UI kit, utils)"
+        },
+        "segments": ["ui", "model", "api", "lib", "config"]
+      }
+    }
   },
   "conventions": {
     "components": "PascalCase, .tsx extension",
     "hooks": "camelCase with use prefix, .ts extension",
     "utils": "camelCase, .ts extension",
     "tests": ".test.ts or .test.tsx, colocated with source",
-    "styles": "Tailwind CSS, cn() helper for conditional classes"
+    "styles": "Tailwind CSS, cn() helper for conditional classes",
+    "slices": "kebab-case for directories"
   },
   "patterns": [
     "Functional components only",
@@ -59,6 +76,6 @@
     "Zustand for client state",
     "React Hook Form + Zod for forms",
     "Path aliases (@/)",
-    "Feature-based folder structure"
+    "Public API via index.ts exports"
   ]
 }
