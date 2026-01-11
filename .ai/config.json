@@ -1,0 +1,153 @@
+{
+  "$schema": "https://raw.githubusercontent.com/AdemKao/ai-cowork/main/schemas/config.schema.json",
+  "version": "2.0",
+  
+  "project": {
+    "name": "ai-cowork",
+    "description": "AI Development Workflow System",
+    "stack": "auto"
+  },
+
+  "context": {
+    "entry": "CONTEXT.md",
+    "index": "context/index.md",
+    "maxTokenBudget": 15000,
+    "autoLoad": ["CONTEXT.md"],
+    "importSyntax": "@"
+  },
+
+  "rules": {
+    "enabled": true,
+    "directory": "rules",
+    "definitions": [
+      {
+        "name": "typescript",
+        "paths": ["**/*.ts", "**/*.tsx"],
+        "file": "rules/typescript.md"
+      },
+      {
+        "name": "testing", 
+        "paths": ["**/*.test.*", "**/*.spec.*", "**/__tests__/**"],
+        "file": "rules/testing.md"
+      },
+      {
+        "name": "api",
+        "paths": ["**/api/**", "**/routes/**", "**/controllers/**"],
+        "file": "rules/api.md"
+      },
+      {
+        "name": "documentation",
+        "paths": ["**/*.md", "**/docs/**"],
+        "file": "rules/documentation.md"
+      }
+    ]
+  },
+
+  "keywords": {
+    "ultrawork": {
+      "aliases": ["ulw", "ultra"],
+      "description": "Maximum orchestration mode with parallel agents",
+      "inject": [
+        "context/core/workflows/delegation.md",
+        "agents/orchestrator.md"
+      ],
+      "enableAgents": ["orchestrator", "explorer"]
+    },
+    "review": {
+      "aliases": ["審查", "code review"],
+      "description": "Code review mode",
+      "inject": [
+        "context/core/workflows/code-review.md",
+        "skills/code-review/SKILL.md"
+      ]
+    },
+    "test": {
+      "aliases": ["測試", "testing"],
+      "description": "Testing mode",
+      "inject": [
+        "context/core/workflows/bdd-tdd.md",
+        "context/core/standards/testing.md"
+      ]
+    },
+    "refactor": {
+      "aliases": ["重構"],
+      "description": "Refactoring mode",
+      "inject": [
+        "context/core/standards/code-quality.md",
+        "skills/refactor/SKILL.md"
+      ]
+    },
+    "commit": {
+      "aliases": ["提交"],
+      "description": "Git commit mode",
+      "inject": [
+        "context/core/workflows/git-workflow.md",
+        "skills/commit/SKILL.md"
+      ]
+    }
+  },
+
+  "stackDetection": {
+    "react-typescript": {
+      "detect": ["package.json:react", "package.json:@types/react"],
+      "load": ["stacks/react-typescript/standards/"]
+    },
+    "php-laravel": {
+      "detect": ["composer.json:laravel/framework"],
+      "load": ["stacks/php-laravel/standards/"]
+    },
+    "node-express": {
+      "detect": ["package.json:express"],
+      "load": ["stacks/node-express/standards/"]
+    }
+  },
+
+  "agents": {
+    "directory": "agents",
+    "primary": "orchestrator",
+    "delegationThreshold": 4
+  },
+
+  "skills": {
+    "directory": "skills",
+    "triggerByKeyword": true
+  },
+
+  "commands": {
+    "directory": "commands",
+    "generateFromSkills": true
+  },
+
+  "sync": {
+    "claude": {
+      "enabled": true,
+      "contextFile": "CLAUDE.md",
+      "rulesDir": ".claude/rules",
+      "agentsDir": ".claude/agents",
+      "commandsDir": ".claude/commands"
+    },
+    "opencode": {
+      "enabled": true,
+      "contextFile": "AGENTS.md",
+      "skillDir": ".opencode/skill",
+      "agentDir": ".opencode/agent",
+      "commandDir": ".opencode/command"
+    }
+  },
+
+  "loading": {
+    "strategy": "lazy",
+    "levels": {
+      "always": ["CONTEXT.md"],
+      "auto": ["rules/*"],
+      "onDemand": ["standards/*", "workflows/*"],
+      "triggered": ["skills/*", "agents/*"]
+    },
+    "tokenLimits": {
+      "simple": 5000,
+      "medium": 10000,
+      "complex": 15000,
+      "major": 20000
+    }
+  }
+}
