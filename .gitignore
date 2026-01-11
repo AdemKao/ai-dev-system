@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Bun
+bun.lockb
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Cache
+.cache/
+.turbo/
+.tmp/
+
+# Test coverage
+coverage/
+
+# OS
+Thumbs.db
+
+# Secrets (never commit these)
+*.pem
+*.key
+credentials.json
+secrets.json
