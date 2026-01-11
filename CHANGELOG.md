@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+
+### Patch Changes
+
+- Fix CI/CD publication error by bumping version to 0.2.1.
+
 ## 0.2.0
 
 ### Minor Changes
