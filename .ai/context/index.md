@@ -16,6 +16,7 @@ Load **only** the files relevant to your current task:
 | **UI/UX work** | `skills/ui-ux/SKILL.md` |
 | **Documentation** | `standards/documentation.md` |
 | **Git operations** | `workflows/git-workflow.md` |
+| **Large features** | `workflows/stacked-development.md` |
 | **Delegating tasks** | `workflows/delegation.md` |
 
 ## Stack-Specific Loading
@@ -81,6 +82,7 @@ If package.json contains "express" → node-express
 | `contract-driven.md` | contracts, api-first | ~6KB |
 | `delegation.md` | delegate, agent | ~6KB |
 | `git-workflow.md` | git, branch, commit | ~6KB |
+| `stacked-development.md` | large feature, stacked PR, worktree | ~12KB |
 
 ### Skills (load only when triggered)
 
@@ -90,6 +92,8 @@ If package.json contains "express" → node-express
 | `code-review/SKILL.md` | review code | ~3KB |
 | `debug/SKILL.md` | debug, fix bug | ~3KB |
 | `commit/SKILL.md` | commit changes | ~2KB |
+| `feature-decompose/SKILL.md` | large feature, split PR | ~6KB |
+| `worktree-agent/SKILL.md` | worktree, parallel agents | ~8KB |
 
 ### Agents (load for delegation)
 
@@ -135,6 +139,14 @@ If package.json contains "express" → node-express
 ```
 1. Load: workflows/code-review.md
 2. Load: skills/code-review/SKILL.md
+```
+
+### Scenario: "Implement large feature with multiple PRs"
+
+```
+1. Load: workflows/stacked-development.md
+2. Load: skills/feature-decompose/SKILL.md
+3. If parallel agents: Load skills/worktree-agent/SKILL.md
 ```
 
 ---
