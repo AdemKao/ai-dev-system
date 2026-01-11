@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+### Patch Changes
+
+- Update README with correct Bun installation commands and sync versioning.
+
 ## 0.2.1
 
 ### Patch Changes
