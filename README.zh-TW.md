@@ -69,10 +69,10 @@
 
 ```bash
 # 全域安裝
-npm install -g ai-cowork
+npm install -g @happytools/ai-cowork
 
 # 或直接使用 npx
-npx ai-cowork init
+npx @happytools/ai-cowork init
 ```
 
 ### 使用 Bun

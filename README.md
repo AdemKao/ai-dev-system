@@ -69,10 +69,10 @@ Perfect for **freelancers**, **consultants**, and **teams** working across multi
 
 ```bash
 # Install globally
-npm install -g ai-cowork
+npm install -g @happytools/ai-cowork
 
 # Or run directly with npx
-npx ai-cowork init
+npx @happytools/ai-cowork init
 ```
 
 ### Using Bun

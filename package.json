@@ -1,6 +1,6 @@
 {
-  "name": "ai-cowork",
-  "version": "0.2.0",
+  "name": "@happytools/ai-cowork",
+  "version": "0.1.0",
   "type": "module",
   "description": "Cross-stack AI development workflow system - Standards, workflows, and skills for AI-assisted development",
   "main": "cli/dist/index.js",
@@ -16,7 +16,7 @@
     "version": "changeset version",
     "release": "changeset publish",
     "changeset": "changeset",
-    "postinstall": "echo '✨ ai-cowork installed! Run: npx ai-cowork init'"
+    "postinstall": "echo '✨ @happytools/ai-cowork installed! Run: npx @happytools/ai-cowork init'"
   },
   "keywords": [
     "ai",

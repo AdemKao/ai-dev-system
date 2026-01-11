@@ -50,8 +50,8 @@ npm pack /path/to/ai-cowork
 npm install ai-cowork-0.1.0.tgz
 
 # 測試 CLI
-npx ai-cowork --help
-npx ai-cowork init
+npx @happytools/ai-cowork --help
+npx @happytools/ai-cowork init
 
 # 清理
 cd .. && rm -rf /tmp/test-install
@@ -73,7 +73,7 @@ npm publish --access public
 # 全新目錄測試
 mkdir /tmp/verify && cd /tmp/verify
 npm init -y
-npx ai-cowork init
+npx @happytools/ai-cowork init
 ```
 
 ## 版本更新
@@ -131,11 +131,11 @@ npm publish --access public
 npm install -g ai-cowork
 
 # 或使用 npx（推薦）
-npx ai-cowork init
+npx @happytools/ai-cowork init
 
 # 初始化特定技術棧
-npx ai-cowork init --stack react-typescript
+npx @happytools/ai-cowork init --stack react-typescript
 
 # 跳過提示
-npx ai-cowork init --yes
+npx @happytools/ai-cowork init --yes
 ```
