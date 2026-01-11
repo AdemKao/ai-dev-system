@@ -12,7 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CLI tool (`ai-dev`) with commands: `init`, `list`, `add`, `sync`, `update`
 - Core standards: code quality, naming, security, documentation, testing
 - Core workflows: BDD/TDD, code review, git workflow, contract-driven development
-- Skills: code-review, debug, commit, refactor, documentation, feature-implementation, ui-ux
+- Skills: code-review, debug, commit, refactor, documentation, feature-implementation, ui-ux, feature-decompose, worktree-agent
+- Stacked development workflow for large features with multiple PRs
+- FSD (Feature-Sliced Design) architecture support for react-typescript stack
 - Stack templates: react-typescript, php-laravel, node-express
 - AI tool sync: OpenCode, Claude Code
 - Specialized agents: backend-engineer, frontend-engineer, tester, explorer, orchestrator
