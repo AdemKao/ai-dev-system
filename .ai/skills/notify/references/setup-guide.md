@@ -153,7 +153,7 @@ To send to multiple people or groups:
 
 When using with AI tools:
 
-1. Install ai-dev-system: `npx ai-dev init`
+1. Install ai-cowork: `npx ai-dev init`
 2. Sync to your AI tool: `npx ai-dev sync opencode`
 3. The notify skill will be available automatically
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ai-dev-system initialization script
+# ai-cowork initialization script
 # Usage: ./init-project.sh [--stack=<stack-name>] [target-dir]
 
 set -e
@@ -12,7 +12,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Script directory (where ai-dev-system is located)
+# Script directory (where ai-cowork is located)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # Default values
@@ -49,7 +49,7 @@ done
 TARGET_DIR="$(cd "$TARGET_DIR" 2>/dev/null && pwd || mkdir -p "$TARGET_DIR" && cd "$TARGET_DIR" && pwd)"
 
 echo -e "${BLUE}╔════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║        ai-dev-system Initializer       ║${NC}"
+echo -e "${BLUE}║        ai-cowork Initializer       ║${NC}"
 echo -e "${BLUE}╚════════════════════════════════════════╝${NC}"
 echo ""
 echo -e "${GREEN}Source:${NC} $SCRIPT_DIR"

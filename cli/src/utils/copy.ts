@@ -1,11 +1,11 @@
-import path from 'path';
-import fs from 'fs-extra';
-import { Stack, AI_BRIDGES, AITool, directoryExists } from './paths.js';
+import path from "path";
+import fs from "fs-extra";
+import { Stack, AI_BRIDGES, AITool, directoryExists } from "./paths.js";
 
 interface CopyOptions {
   stack?: Stack;
   skipStacks?: boolean; // When true, don't copy any stacks
-  aiTools: AITool[] | 'all';
+  aiTools: AITool[] | "all";
   overwrite?: boolean;
 }
 
@@ -28,27 +28,27 @@ export async function copyAiDirectory(
     success: true,
     copied: [],
     skipped: [],
-    errors: []
+    errors: [],
   };
 
-  const targetAiDir = path.join(targetDir, '.ai');
+  const targetAiDir = path.join(targetDir, ".ai");
 
   try {
     // Check if .ai already exists
     if (await directoryExists(targetAiDir)) {
       if (!options.overwrite) {
-        result.skipped.push('.ai (already exists, use --force to overwrite)');
+        result.skipped.push(".ai (already exists, use --force to overwrite)");
         return result;
       }
     }
 
     // Copy core directories (always copy these)
-    const coreDirs = ['context', 'skills', 'agents', 'templates'];
-    
+    const coreDirs = ["context", "skills", "agents", "templates"];
+
     for (const dir of coreDirs) {
       const src = path.join(sourceDir, dir);
       const dest = path.join(targetAiDir, dir);
-      
+
       if (await directoryExists(src)) {
         await fs.copy(src, dest, { overwrite: options.overwrite });
         result.copied.push(`.ai/${dir}`);
@@ -58,12 +58,12 @@ export async function copyAiDirectory(
     // Handle stacks based on options
     if (options.skipStacks) {
       // Don't copy any stacks
-      result.skipped.push('.ai/stacks (skipped - no stack selected)');
+      result.skipped.push(".ai/stacks (skipped - no stack selected)");
     } else if (options.stack) {
       // Copy specific stack only
-      const stackSrc = path.join(sourceDir, 'stacks', options.stack);
-      const stackDest = path.join(targetAiDir, 'stacks', options.stack);
-      
+      const stackSrc = path.join(sourceDir, "stacks", options.stack);
+      const stackDest = path.join(targetAiDir, "stacks", options.stack);
+
       if (await directoryExists(stackSrc)) {
         await fs.copy(stackSrc, stackDest, { overwrite: options.overwrite });
         result.copied.push(`.ai/stacks/${options.stack}`);
@@ -72,15 +72,14 @@ export async function copyAiDirectory(
       }
     } else {
       // No stack specified and not skipping - copy all stacks
-      const stacksSrc = path.join(sourceDir, 'stacks');
-      const stacksDest = path.join(targetAiDir, 'stacks');
-      
+      const stacksSrc = path.join(sourceDir, "stacks");
+      const stacksDest = path.join(targetAiDir, "stacks");
+
       if (await directoryExists(stacksSrc)) {
         await fs.copy(stacksSrc, stacksDest, { overwrite: options.overwrite });
-        result.copied.push('.ai/stacks (all)');
+        result.copied.push(".ai/stacks (all)");
       }
     }
-
   } catch (error) {
     result.success = false;
     result.errors.push(error instanceof Error ? error.message : String(error));
@@ -94,23 +93,22 @@ export async function copyAiDirectory(
  */
 export async function createBridges(
   targetDir: string,
-  aiTools: AITool[] | 'all'
+  aiTools: AITool[] | "all"
 ): Promise<CopyResult> {
   const result: CopyResult = {
     success: true,
     copied: [],
     skipped: [],
-    errors: []
+    errors: [],
   };
 
-  const tools = aiTools === 'all' 
-    ? Object.keys(AI_BRIDGES) as AITool[]
-    : aiTools;
+  const tools =
+    aiTools === "all" ? (Object.keys(AI_BRIDGES) as AITool[]) : aiTools;
 
   for (const tool of tools) {
     const bridgeDir = AI_BRIDGES[tool];
     const bridgePath = path.join(targetDir, bridgeDir);
-    
+
     try {
       if (await directoryExists(bridgePath)) {
         result.skipped.push(`${bridgeDir} (already exists)`);
@@ -118,15 +116,15 @@ export async function createBridges(
       }
 
       await fs.ensureDir(bridgePath);
-      
+
       // Create bridge README
-      const readmePath = path.join(bridgePath, 'README.md');
+      const readmePath = path.join(bridgePath, "README.md");
       const readmeContent = generateBridgeReadme(tool);
       await fs.writeFile(readmePath, readmeContent);
-      
+
       // Create tool-specific config files
       await createToolConfig(bridgePath, tool);
-      
+
       result.copied.push(bridgeDir);
     } catch (error) {
       result.errors.push(`Failed to create ${bridgeDir}: ${error}`);
@@ -141,15 +139,15 @@ export async function createBridges(
  */
 function generateBridgeReadme(tool: AITool): string {
   const toolNames: Record<AITool, string> = {
-    claude: 'Claude Code',
-    cursor: 'Cursor',
-    opencode: 'OpenCode',
-    agent: 'AI Agent'
+    claude: "Claude Code",
+    cursor: "Cursor",
+    opencode: "OpenCode",
+    agent: "AI Agent",
   };
 
   return `# ${toolNames[tool]} Integration
 
-This directory bridges ${toolNames[tool]} with the ai-dev-system.
+This directory bridges ${toolNames[tool]} with the ai-cowork.
 
 ## Setup
 
@@ -164,12 +162,15 @@ See \`.ai/context/index.md\` for context loading rules.
 /**
  * Create tool-specific configuration files
  */
-async function createToolConfig(bridgePath: string, tool: AITool): Promise<void> {
+async function createToolConfig(
+  bridgePath: string,
+  tool: AITool
+): Promise<void> {
   switch (tool) {
-    case 'claude':
+    case "claude":
       // Create CLAUDE.md
       await fs.writeFile(
-        path.join(bridgePath, 'CLAUDE.md'),
+        path.join(bridgePath, "CLAUDE.md"),
         `# Claude Code Configuration
 
 ## Context Loading
@@ -185,11 +186,11 @@ Before starting any task, consult \`.ai/context/index.md\` for the appropriate c
 `
       );
       break;
-      
-    case 'cursor':
+
+    case "cursor":
       // Create .cursorrules
       await fs.writeFile(
-        path.join(bridgePath, 'rules.md'),
+        path.join(bridgePath, "rules.md"),
         `# Cursor Rules
 
 ## Context Loading
@@ -206,10 +207,10 @@ Load only the relevant context files for the current task.
       );
       break;
 
-    case 'opencode':
+    case "opencode":
       // Create opencode config reference
       await fs.writeFile(
-        path.join(bridgePath, 'config.md'),
+        path.join(bridgePath, "config.md"),
         `# OpenCode Configuration
 
 ## Agent Prompt Addition
@@ -229,15 +230,15 @@ Before executing tasks:
       );
       break;
 
-    case 'agent':
+    case "agent":
       // Create agent integration guide
       await fs.writeFile(
-        path.join(bridgePath, 'AGENT.md'),
+        path.join(bridgePath, "AGENT.md"),
         `# AI Agent Integration
 
 ## Context System
 
-This project uses ai-dev-system for AI-assisted development.
+This project uses ai-cowork for AI-assisted development.
 
 ## Loading Rules
 
